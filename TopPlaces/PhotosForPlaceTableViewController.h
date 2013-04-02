@@ -7,11 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ImageViewController.h"
 
 @protocol PhotosForPlaceTableViewControllerDataSource <NSObject>
 -(NSDictionary*) getSelectedPlaceDetails;
 @end
 
-@interface PhotosForPlaceTableViewController : UITableViewController
-@property id<PhotosForPlaceTableViewControllerDataSource> placeDataSource;
+@interface PhotosForPlaceTableViewController : UITableViewController <ImageViewControllerDataSource>
+
+    @property id<PhotosForPlaceTableViewControllerDataSource> placeDataSource;
+    @property NSArray* model;
+
 @end

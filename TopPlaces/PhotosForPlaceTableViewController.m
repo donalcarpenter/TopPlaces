@@ -7,14 +7,24 @@
 //
 
 #import "PhotosForPlaceTableViewController.h"
+#import "FlickrFetcher.h"
 
 @interface PhotosForPlaceTableViewController ()
-
+    @property (readonly, strong, nonatomic) NSMutableDictionary* smallImageCache;
 @end
 
 @implementation PhotosForPlaceTableViewController
 
+@synthesize smallImageCache = _smallImageCache;
+@synthesize model = _model;
 @synthesize placeDataSource = _placeDataSource;
+
+-(NSMutableDictionary*) smallImageCache{
+    if(!_smallImageCache){
+        _smallImageCache = [NSMutableDictionary dictionary];
+    }
+    return _smallImageCache;
+}
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -28,18 +38,39 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.model = [FlickrFetcher photosInPlace:[self.placeDataSource getSelectedPlaceDetails] maxResults:50];
+}
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if([segue.identifier isEqualToString:@"ShowImage"]){
+        ImageViewController *controller = segue.destinationViewController;
+        controller.dataSource = self;
+    }
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - ImageViewControllerDataSource
+
+-(NSString*) imageTitle{
+    NSDictionary* imageDetails = [self.model objectAtIndex:self.tableView.indexPathForSelectedRow.row];
+    
+    return [imageDetails objectForKey:@"title"];
+}
+
+- (UIImage*) imageToDisplay{
+    NSDictionary* imageDetails = [self.model objectAtIndex:self.tableView.indexPathForSelectedRow.row];
+    
+    NSURL* imageUrl = [FlickrFetcher urlForPhoto:imageDetails format:FlickrPhotoFormatLarge];
+    
+    NSData* imageData = [NSData dataWithContentsOfURL:imageUrl];
+    
+    return [UIImage imageWithData:imageData];
 }
 
 #pragma mark - Table view data source
@@ -52,71 +83,35 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 1;
+    return self.model.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"Photos For Place Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    NSDictionary* imageDetails = [self.model objectAtIndex:indexPath.row];
+    cell.textLabel.text = [imageDetails objectForKey:@"title"];
+    if(cell.textLabel.text.length == 0){
+        cell.textLabel.text = @"Unknown";
+    }
     
-    // Configure the cell...
-    
+    NSURL *imageUrl = [FlickrFetcher urlForPhoto:imageDetails format:FlickrPhotoFormatSquare];
+    NSData *imageData = [self.smallImageCache objectForKey:imageUrl];
+    if(!imageData){
+        imageData = [NSData dataWithContentsOfURL:imageUrl];
+        [self.smallImageCache setObject:imageData forKey:imageUrl];
+    }
+    cell.imageView.image = [UIImage imageWithData:imageData];
+    cell.detailTextLabel.text = [imageDetails objectForKey:@"tags"];
     return cell;
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+
 }
 
 @end

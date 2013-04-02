@@ -46,7 +46,6 @@
     
     NSString *jsonString = [NSString stringWithContentsOfURL:[NSURL URLWithString:query] encoding:NSUTF8StringEncoding error:nil];
     
-    
     NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
     
     NSError *error = nil;
@@ -89,7 +88,7 @@
 + (NSArray *)photosInPlace:(NSDictionary *)place maxResults:(int)maxResults
 {
     if(USE_FILE_NOT_INTER_WEB){
-        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"topphoto" ofType:@"json"];
+        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"topphotos" ofType:@"json"];
         return [[self executeFlickFetchFromFile:filePath] valueForKeyPath:@"photos.photo"];
     }
     
