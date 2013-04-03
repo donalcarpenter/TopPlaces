@@ -40,6 +40,8 @@
     
     UIImage *image = [self.dataSource imageToDisplay];
     
+    self.navigationItem.title = [self.dataSource imageTitle];
+    
     self.uiImageView.image = image;
     self.uiImageView.frame = CGRectMake(0, 0, image.size.width, image.size.height);
     self.scrollView.contentSize = self.uiImageView.image.size;
@@ -47,8 +49,6 @@
     NSLog(@"widths: scrollView = %g, content = %g", self.scrollView.frame.size.width, self.scrollView.contentSize.width);
 
     NSLog(@"heights: scrollView = %g, content = %g", self.scrollView.frame.size.height, self.scrollView.contentSize.height);
-    
-    self.titleLabel.text = [self.dataSource imageTitle];
 }
 
 - (void)didReceiveMemoryWarning

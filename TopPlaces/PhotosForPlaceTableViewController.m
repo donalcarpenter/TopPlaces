@@ -8,6 +8,7 @@
 
 #import "PhotosForPlaceTableViewController.h"
 #import "FlickrFetcher.h"
+#import "TopPlacesSettingsStorage.h"
 
 @interface PhotosForPlaceTableViewController ()
     @property (readonly, strong, nonatomic) NSMutableDictionary* smallImageCache;
@@ -46,6 +47,11 @@
     if([segue.identifier isEqualToString:@"ShowImage"]){
         ImageViewController *controller = segue.destinationViewController;
         controller.dataSource = self;
+        
+        // now add to the list in the NSUserDefaults
+        NSDictionary* imageDetails = [self.model objectAtIndex:self.tableView.indexPathForSelectedRow.row];
+        
+        [TopPlacesSettingsStorage addDataToHistory:imageDetails];
     }
 }
 
@@ -60,7 +66,7 @@
 -(NSString*) imageTitle{
     NSDictionary* imageDetails = [self.model objectAtIndex:self.tableView.indexPathForSelectedRow.row];
     
-    return [imageDetails objectForKey:@"title"];
+    return [imageDetails objectForKey:FLICKR_PHOTO_TITLE];
 }
 
 - (UIImage*) imageToDisplay{
@@ -90,8 +96,11 @@
 {
     static NSString *CellIdentifier = @"Photos For Place Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
     NSDictionary* imageDetails = [self.model objectAtIndex:indexPath.row];
-    cell.textLabel.text = [imageDetails objectForKey:@"title"];
+    
+    cell.textLabel.text = [imageDetails objectForKey:FLICKR_PHOTO_TITLE];
+    
     if(cell.textLabel.text.length == 0){
         cell.textLabel.text = @"Unknown";
     }
@@ -103,7 +112,8 @@
         [self.smallImageCache setObject:imageData forKey:imageUrl];
     }
     cell.imageView.image = [UIImage imageWithData:imageData];
-    cell.detailTextLabel.text = [imageDetails objectForKey:@"tags"];
+    cell.detailTextLabel.text = [imageDetails objectForKey:FLICKR_PHOTO_DESCRIPTION];
+    
     return cell;
 }
 
