@@ -98,6 +98,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="nls-EM-Lyc"/>
+                    <connections>
+                        <outlet property="photosTable" destination="E1p-wY-N1R" id="nKe-oX-EpH"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7ie-sZ-yVp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -239,12 +242,37 @@
             <point key="canvasLocation" x="645" y="-182"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="ImageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ImageViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="uiImageView" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="PhotosForPlaceTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PhotosForPlaceTableViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="photosTable" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="TopPlacesRecentPhotosTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesRecentPhotosTableViewController.h"/>
+        </class>
+        <class className="TopPlacesTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacesTableViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="topPlacesTableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="FCl-f8-gbv"/>
+        <segue reference="eQQ-mo-zhU"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -11,7 +11,7 @@
 #define FLICKR_PLACE_ID @"place_id"
 
 #define WRITE_JSON_TO_FILE YES
-#define USE_FILE_NOT_INTER_WEB YES
+#define USE_FILE_NOT_INTER_WEB NO
 
 @implementation FlickrFetcher
 

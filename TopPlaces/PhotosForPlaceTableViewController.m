@@ -12,6 +12,8 @@
 
 @interface PhotosForPlaceTableViewController ()
     @property (readonly, strong, nonatomic) NSMutableDictionary* smallImageCache;
+@property (strong, nonatomic) IBOutlet UITableView *photosTable;
+
 @end
 
 @implementation PhotosForPlaceTableViewController
@@ -19,6 +21,7 @@
 @synthesize smallImageCache = _smallImageCache;
 @synthesize model = _model;
 @synthesize placeDataSource = _placeDataSource;
+@synthesize photosTable = _photosTable;
 
 -(NSMutableDictionary*) smallImageCache{
     if(!_smallImageCache){
@@ -40,7 +43,17 @@
 {
     [super viewDidLoad];
     
-    self.model = [FlickrFetcher photosInPlace:[self.placeDataSource getSelectedPlaceDetails] maxResults:50];
+    dispatch_queue_t loadfromflickr = dispatch_queue_create("loadfromflickr", NULL);
+    
+    dispatch_async(loadfromflickr, ^{
+        
+        self.model = [FlickrFetcher photosInPlace:[self.placeDataSource getSelectedPlaceDetails] maxResults:50];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.photosTable reloadData];
+        });
+    });
+    
 }
 
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
@@ -98,21 +111,25 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     NSDictionary* imageDetails = [self.model objectAtIndex:indexPath.row];
-    
+    cell.imageView.image = Nil;
     cell.textLabel.text = [imageDetails objectForKey:FLICKR_PHOTO_TITLE];
     
     if(cell.textLabel.text.length == 0){
         cell.textLabel.text = @"Unknown";
     }
     
-    NSURL *imageUrl = [FlickrFetcher urlForPhoto:imageDetails format:FlickrPhotoFormatSquare];
-    NSData *imageData = [self.smallImageCache objectForKey:imageUrl];
-    if(!imageData){
-        imageData = [NSData dataWithContentsOfURL:imageUrl];
-        [self.smallImageCache setObject:imageData forKey:imageUrl];
-    }
-    cell.imageView.image = [UIImage imageWithData:imageData];
+    dispatch_queue_t loadImageThread = dispatch_queue_create("ImageLoading", NULL);
     cell.detailTextLabel.text = [imageDetails objectForKey:FLICKR_PHOTO_DESCRIPTION];
+
+    dispatch_async(loadImageThread, ^{
+        NSURL *imageUrl = [FlickrFetcher urlForPhoto:imageDetails format:FlickrPhotoFormatSquare];
+        NSData *imageData = [NSData dataWithContentsOfURL:imageUrl];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            cell.imageView.image = [UIImage imageWithData:imageData];
+            [cell setNeedsDisplay];
+            [cell setNeedsLayout];
+        });
+    });
     
     return cell;
 }
