@@ -24,11 +24,17 @@
 		B8217CEC170C01B000CD70C6 /* TopPlacesRecentPhotosTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B8217CEB170C01B000CD70C6 /* TopPlacesRecentPhotosTableViewController.m */; };
 		B828DC7F16EE40C800778F8F /* cannedJsonData.json in Resources */ = {isa = PBXBuildFile; fileRef = B828DC7E16EE40C800778F8F /* cannedJsonData.json */; };
 		B828DC8416EF0EFF00778F8F /* PhotosForPlaceTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B828DC8316EF0EFF00778F8F /* PhotosForPlaceTableViewController.m */; };
+		B85475AE171F395900BBF032 /* TopPlacesPhotoDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = B85475AD171F395900BBF032 /* TopPlacesPhotoDownloader.m */; };
+		B892DAFF1728771B009A9A1C /* TopPlacesMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B892DAFE1728771B009A9A1C /* TopPlacesMapViewController.m */; };
+		B892DB0217287A51009A9A1C /* TopPlacesPhotoAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = B892DB0117287A51009A9A1C /* TopPlacesPhotoAnnotation.m */; };
+		B892DB041728860D009A9A1C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B892DB031728860D009A9A1C /* MapKit.framework */; };
+		B892DB07172B1E52009A9A1C /* PhotosForPlacesMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B892DB06172B1E52009A9A1C /* PhotosForPlacesMapViewController.m */; };
 		B8ABED1C16EF91E200420701 /* topplaces.json in Resources */ = {isa = PBXBuildFile; fileRef = B8ABED1B16EF91E200420701 /* topplaces.json */; };
 		B8ABED1F16EF91FD00420701 /* topphotos.json in Resources */ = {isa = PBXBuildFile; fileRef = B8ABED1E16EF91FD00420701 /* topphotos.json */; };
 		B8ABED2116EF925000420701 /* georef.json in Resources */ = {isa = PBXBuildFile; fileRef = B8ABED2016EF925000420701 /* georef.json */; };
 		B8B1EECC16F7BE1000BAD654 /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B8B1EECB16F7BE1000BAD654 /* ImageViewController.m */; };
 		B8B1EECE16F88E4B00BAD654 /* cannedImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B8B1EECD16F88E4B00BAD654 /* cannedImage.jpg */; };
+		B8D1D07B1716061600DA994A /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8D1D07A1716061500DA994A /* MainStoryboard_iPad.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,12 +66,22 @@
 		B828DC7E16EE40C800778F8F /* cannedJsonData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cannedJsonData.json; sourceTree = "<group>"; };
 		B828DC8216EF0EFF00778F8F /* PhotosForPlaceTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotosForPlaceTableViewController.h; sourceTree = "<group>"; };
 		B828DC8316EF0EFF00778F8F /* PhotosForPlaceTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosForPlaceTableViewController.m; sourceTree = "<group>"; };
+		B85475AC171F395900BBF032 /* TopPlacesPhotoDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPlacesPhotoDownloader.h; sourceTree = "<group>"; };
+		B85475AD171F395900BBF032 /* TopPlacesPhotoDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPlacesPhotoDownloader.m; sourceTree = "<group>"; };
+		B892DAFD1728771B009A9A1C /* TopPlacesMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPlacesMapViewController.h; sourceTree = "<group>"; };
+		B892DAFE1728771B009A9A1C /* TopPlacesMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPlacesMapViewController.m; sourceTree = "<group>"; };
+		B892DB0017287A51009A9A1C /* TopPlacesPhotoAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPlacesPhotoAnnotation.h; sourceTree = "<group>"; };
+		B892DB0117287A51009A9A1C /* TopPlacesPhotoAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPlacesPhotoAnnotation.m; sourceTree = "<group>"; };
+		B892DB031728860D009A9A1C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		B892DB05172B1E52009A9A1C /* PhotosForPlacesMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotosForPlacesMapViewController.h; sourceTree = "<group>"; };
+		B892DB06172B1E52009A9A1C /* PhotosForPlacesMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosForPlacesMapViewController.m; sourceTree = "<group>"; };
 		B8ABED1B16EF91E200420701 /* topplaces.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = topplaces.json; sourceTree = "<group>"; };
 		B8ABED1E16EF91FD00420701 /* topphotos.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = topphotos.json; sourceTree = "<group>"; };
 		B8ABED2016EF925000420701 /* georef.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = georef.json; sourceTree = "<group>"; };
 		B8B1EECA16F7BE1000BAD654 /* ImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewController.h; sourceTree = "<group>"; };
 		B8B1EECB16F7BE1000BAD654 /* ImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageViewController.m; sourceTree = "<group>"; };
 		B8B1EECD16F88E4B00BAD654 /* cannedImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cannedImage.jpg; sourceTree = "<group>"; };
+		B8D1D07A1716061500DA994A /* MainStoryboard_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B892DB041728860D009A9A1C /* MapKit.framework in Frameworks */,
 				B821332716E50A0F0023A5E6 /* UIKit.framework in Frameworks */,
 				B821332916E50A0F0023A5E6 /* Foundation.framework in Frameworks */,
 				B821332B16E50A0F0023A5E6 /* CoreGraphics.framework in Frameworks */,
@@ -102,6 +119,7 @@
 		B821332516E50A0F0023A5E6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B892DB031728860D009A9A1C /* MapKit.framework */,
 				B821332616E50A0F0023A5E6 /* UIKit.framework */,
 				B821332816E50A0F0023A5E6 /* Foundation.framework */,
 				B821332A16E50A0F0023A5E6 /* CoreGraphics.framework */,
@@ -119,14 +137,23 @@
 				B821333516E50A0F0023A5E6 /* TopPlacesAppDelegate.h */,
 				B821333616E50A0F0023A5E6 /* TopPlacesAppDelegate.m */,
 				B821333E16E50A100023A5E6 /* MainStoryboard_iPhone.storyboard */,
+				B892DB0017287A51009A9A1C /* TopPlacesPhotoAnnotation.h */,
+				B892DB0117287A51009A9A1C /* TopPlacesPhotoAnnotation.m */,
+				B8D1D07A1716061500DA994A /* MainStoryboard_iPad.storyboard */,
 				B8217CEA170C01B000CD70C6 /* TopPlacesRecentPhotosTableViewController.h */,
 				B8217CEB170C01B000CD70C6 /* TopPlacesRecentPhotosTableViewController.m */,
 				B821334416E50A100023A5E6 /* TopPlacesViewController.h */,
 				B821334516E50A100023A5E6 /* TopPlacesViewController.m */,
 				B821335016E50E4A0023A5E6 /* TopPlacesTableViewController.h */,
 				B821335116E50E4A0023A5E6 /* TopPlacesTableViewController.m */,
+				B892DAFD1728771B009A9A1C /* TopPlacesMapViewController.h */,
+				B892DAFE1728771B009A9A1C /* TopPlacesMapViewController.m */,
+				B892DB05172B1E52009A9A1C /* PhotosForPlacesMapViewController.h */,
+				B892DB06172B1E52009A9A1C /* PhotosForPlacesMapViewController.m */,
 				B828DC8216EF0EFF00778F8F /* PhotosForPlaceTableViewController.h */,
 				B828DC8316EF0EFF00778F8F /* PhotosForPlaceTableViewController.m */,
+				B85475AC171F395900BBF032 /* TopPlacesPhotoDownloader.h */,
+				B85475AD171F395900BBF032 /* TopPlacesPhotoDownloader.m */,
 				B821332D16E50A0F0023A5E6 /* Supporting Files */,
 				B828DC7E16EE40C800778F8F /* cannedJsonData.json */,
 				B8B1EECA16F7BE1000BAD654 /* ImageViewController.h */,
@@ -224,6 +251,7 @@
 				B8ABED1F16EF91FD00420701 /* topphotos.json in Resources */,
 				B8ABED2116EF925000420701 /* georef.json in Resources */,
 				B8B1EECE16F88E4B00BAD654 /* cannedImage.jpg in Resources */,
+				B8D1D07B1716061600DA994A /* MainStoryboard_iPad.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,6 +271,10 @@
 				B8B1EECC16F7BE1000BAD654 /* ImageViewController.m in Sources */,
 				B8217CE9170BF8CD00CD70C6 /* TopPlacesSettingsStorage.m in Sources */,
 				B8217CEC170C01B000CD70C6 /* TopPlacesRecentPhotosTableViewController.m in Sources */,
+				B85475AE171F395900BBF032 /* TopPlacesPhotoDownloader.m in Sources */,
+				B892DAFF1728771B009A9A1C /* TopPlacesMapViewController.m in Sources */,
+				B892DB0217287A51009A9A1C /* TopPlacesPhotoAnnotation.m in Sources */,
+				B892DB07172B1E52009A9A1C /* PhotosForPlacesMapViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,8 +358,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TopPlaces/TopPlaces-Prefix.pch";
 				INFOPLIST_FILE = "TopPlaces/TopPlaces-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -338,8 +371,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TopPlaces/TopPlaces-Prefix.pch";
 				INFOPLIST_FILE = "TopPlaces/TopPlaces-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

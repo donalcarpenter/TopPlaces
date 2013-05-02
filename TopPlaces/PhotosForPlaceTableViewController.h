@@ -18,4 +18,6 @@
     @property id<PhotosForPlaceTableViewControllerDataSource> placeDataSource;
     @property NSArray* model;
 
+- (IBAction)refreshPhotosForLocationFromFlickr:(id)sender;
+
 @end

@@ -10,6 +10,7 @@
 #import "FlickrFetcher.h"
 
 @interface TopPlacesTableViewController ()
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *refreshTopPlacesButton;
 @property NSDictionary* selectedItem;
 @end
 
@@ -18,6 +19,7 @@
 @synthesize model = _model;
 @synthesize topPlacesTableView = _topPlacesTableView;
 @synthesize selectedItem = _selectedItem;
+@synthesize refreshTopPlacesButton = _refreshTopPlacesButton;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -35,14 +37,34 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
     
-    self.model = [[FlickrFetcher topPlaces] sortedArrayUsingComparator:^(id a, id b){
-        NSString* woe1 = [(NSDictionary*)a objectForKey:@"woe_name"];
-        NSString* woe2 = [(NSDictionary*)b objectForKey:@"woe_name"];
+    [self refreshTopPlacesFromFlickr:self.refreshTopPlacesButton];
+}
+
+- (IBAction)refreshTopPlacesFromFlickr:(id)sender{
+    dispatch_queue_t loadTopPlacesDispatchQueue = dispatch_queue_create("loadTopPlacesTableDispatchQueue", NULL);
+    
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [spinner startAnimating];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
+    
+    dispatch_async(loadTopPlacesDispatchQueue, ^{
+        self.model = [[FlickrFetcher topPlaces] sortedArrayUsingComparator:^(id a, id b){
+            NSString* woe1 = [(NSDictionary*)a objectForKey:@"woe_name"];
+            NSString* woe2 = [(NSDictionary*)b objectForKey:@"woe_name"];
+            
+            return [woe1 compare:woe2];
+                    }];
         
-        return [woe1 compare:woe2];
-    }];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.topPlacesTableView reloadData];
+                [self.topPlacesTableView setNeedsDisplay];
+                
+                self.navigationItem.rightBarButtonItem = sender;
+            });
+    });
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -86,11 +108,14 @@
     }
 }
 
+-(BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation{
+    return YES;
+}
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     self.selectedItem = [self.model objectAtIndex:indexPath.row];
 }
-
 @end

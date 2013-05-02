@@ -13,6 +13,7 @@
 
 @property NSArray *model;
 @property (strong, nonatomic) IBOutlet UITableView *topPlacesTableView;
+- (IBAction)refreshTopPlacesFromFlickr:(id)sender;
 
 
 @end

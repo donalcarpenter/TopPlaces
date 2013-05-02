@@ -16,6 +16,8 @@
 
 @interface ImageViewController : UIViewController <UIScrollViewDelegate>
 
+-(void) reloadImage;
+
 @property id<ImageViewControllerDataSource> dataSource;
 
 @property (weak, nonatomic) IBOutlet UIImageView *uiImageView;

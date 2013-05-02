@@ -69,11 +69,27 @@
         cell.textLabel.text = @"Unknown";
     }
     
+    cell.imageView.image = Nil;
+    
     NSURL *imageUrl = [FlickrFetcher urlForPhoto:imageDetails format:FlickrPhotoFormatSquare];
     
-    NSData *imageData = [NSData dataWithContentsOfURL:imageUrl];
-    cell.imageView.image = [UIImage imageWithData:imageData];
-    cell.detailTextLabel.text = [imageDetails objectForKey:FLICKR_PHOTO_DESCRIPTION];
+    dispatch_queue_t loadImageQueue = dispatch_queue_create("recentItemsLoadQueue", NULL);
+    
+    dispatch_async(loadImageQueue, ^{
+       
+        NSData *imageData = [NSData dataWithContentsOfURL:imageUrl];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            cell.imageView.image = [UIImage imageWithData:imageData];
+            cell.detailTextLabel.text = [imageDetails objectForKey:FLICKR_PHOTO_DESCRIPTION];
+            
+            [cell setNeedsDisplay];
+            [cell setNeedsLayout];
+        });
+        
+    });
+
     
     return cell;
 }

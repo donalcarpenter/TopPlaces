@@ -9,10 +9,12 @@
 #import "PhotosForPlaceTableViewController.h"
 #import "FlickrFetcher.h"
 #import "TopPlacesSettingsStorage.h"
+#import "TopPlacesPhotoDownloader.h"
 
 @interface PhotosForPlaceTableViewController ()
     @property (readonly, strong, nonatomic) NSMutableDictionary* smallImageCache;
 @property (strong, nonatomic) IBOutlet UITableView *photosTable;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *refreshDataButton;
 
 @end
 
@@ -22,6 +24,7 @@
 @synthesize model = _model;
 @synthesize placeDataSource = _placeDataSource;
 @synthesize photosTable = _photosTable;
+@synthesize refreshDataButton    = _refreshDataButton;
 
 -(NSMutableDictionary*) smallImageCache{
     if(!_smallImageCache){
@@ -43,20 +46,47 @@
 {
     [super viewDidLoad];
     
+    [self refreshPhotosForLocationFromFlickr:self.refreshDataButton];
+    
+}
+
+- (void) refreshPhotosForLocationFromFlickr:(id)sender{
     dispatch_queue_t loadfromflickr = dispatch_queue_create("loadfromflickr", NULL);
+    
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [spinner startAnimating];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
+    
+    NSDictionary *placeDetails = [self.placeDataSource getSelectedPlaceDetails];
+    self.navigationItem.title = [placeDetails objectForKey:@"woe_name"];
+
     
     dispatch_async(loadfromflickr, ^{
         
-        self.model = [FlickrFetcher photosInPlace:[self.placeDataSource getSelectedPlaceDetails] maxResults:50];
+        
+        self.model = [FlickrFetcher photosInPlace:placeDetails maxResults:50];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.photosTable reloadData];
+            [self.photosTable setNeedsDisplay];
+            self.navigationItem.rightBarButtonItem = sender;
         });
     });
+}
+
+-(ImageViewController *) imageViwControllerInSplitViewMaster{
+    UIViewController *vc = [self.splitViewController.viewControllers lastObject];
+    
+    if(![vc isKindOfClass:[ImageViewController class]]){
+        return nil;
+    }
+    
+    return (ImageViewController*)vc;
     
 }
 
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    
     if([segue.identifier isEqualToString:@"ShowImage"]){
         ImageViewController *controller = segue.destinationViewController;
         controller.dataSource = self;
@@ -87,7 +117,8 @@
     
     NSURL* imageUrl = [FlickrFetcher urlForPhoto:imageDetails format:FlickrPhotoFormatLarge];
     
-    NSData* imageData = [NSData dataWithContentsOfURL:imageUrl];
+    
+    NSData* imageData = [TopPlacesPhotoDownloader getDataForUrl:imageUrl];
     
     return [UIImage imageWithData:imageData];
 }
@@ -138,7 +169,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    ImageViewController* ivc = [self imageViwControllerInSplitViewMaster];
+    if(ivc){
+        ivc.dataSource = self;
+        [ivc reloadImage];
+    }
 }
 
 @end
